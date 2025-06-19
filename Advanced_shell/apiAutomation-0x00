@@ -1,0 +1,3 @@
+#!/bin/bash
+API_URL="https://pokeapi.co/api/v2/pokemon/"
+curl -s "$API_URL" -o data.json 2> error.txt
