@@ -3,17 +3,11 @@
 # Input JSON file
 INPUT="data.json"
 
-#Loop through each pokemon URL
-
-jq -r '.results[].url' "$INPUT" | while read -r url; do
-	# Fetch detailed pokemon data
-	data=$(curl -s "$url")
-
-	# Extract name, types, weight, height
-	name=$(echo "$data" | jq -r '.name')
-	type=$(echo "$data" | jq -r '[.types[].type.name] | join(",")')
- 	formatted_weight=$(echo "$data" | jq -r '.weight')
-	formatted_height=$(echo "$data" | jq -r '.height')
+# Extract name, types, weight, height
+name=$(jq -r '.name' "$INPUT")
+type=$(jq -r '[.types[].type.name] | join(",")' "$INPUT")
+formatted_weight=$(jq -r '.weight' "$INPUT" | awk '{printf "%.1f", $1 / 10}')
+formatted_height=$(jq -r '.height' "$INPUT" | awk '{printf "%.1f", $1 / 10}')
 
 echo "$name is of type $type, weighs ${formatted_weight}kg, and is ${formatted_height}m tall."
-done
+
