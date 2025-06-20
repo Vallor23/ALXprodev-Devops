@@ -15,5 +15,5 @@ jq -r '.results[].url' "$INPUT" | while read -r url; do
 	weight=$(echo "$data" | jq -r '.weight')
 	height=$(echo "$data" | jq -r '.height')
 
-echo "$name is of type $type, weighs ${weight}kg and is ${height}m tall."
+echo "$name is of type $type, weighs ${weight}kg, and is ${height}m tall."
 done
