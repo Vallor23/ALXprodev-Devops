@@ -11,9 +11,10 @@ for name in "${pokemons[@]}"; do
 	curl -s "${API_URL}${name_lower}" -o "${name}.json"
 
 	if [ $? -ne 0 ]; then
-		echo "Failed to fetch data for $name" >> errors.txt
+		echo "Failed to fetch data for $name_lower" >> errors.txt
 	else
-		echo "Fetched data for $name"
+		echo "Fetched data for $name_lower..."
+		echo "Saved data to pokemon_data/bulbasaur.json ✅"
 	fi
 
 	# Delay to prevent rate limiting
