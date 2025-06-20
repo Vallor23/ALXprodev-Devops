@@ -8,7 +8,7 @@ for name in "${pokemons[@]}"; do
 	name_lower=$(echo "$name"| tr '[:upper:]' '[:lower:]')
 
 	#Fetch and save JSON
-	curl -s "${API_URL}${name_lower}" -o "${name}.json"
+	curl -s "${API_URL}${name_lower}" -o "${name_lower}.json"
 
 	if [ $? -ne 0 ]; then
 		echo "Failed to fetch data for $name_lower" >> errors.txt
