@@ -4,8 +4,8 @@
 INPUT="data.json"
 
 # Extract name, types, weight, height
-name=$(jq -r '.name' "$INPUT")
-type=$(jq -r '[.types[].type.name] | join(",")' "$INPUT")
+name=$(jq -r '.name' "$INPUT" | sed 's/^./\U&/')
+type=$(jq -r '[.types[].type.name] | join(",")' "$INPUT" | sed 's/^./\U&/' )
 formatted_weight=$(jq -r '.weight' "$INPUT" | awk '{printf "%.1f", $1 / 10}')
 formatted_height=$(jq -r '.height' "$INPUT" | awk '{printf "%.1f", $1 / 10}')
 
