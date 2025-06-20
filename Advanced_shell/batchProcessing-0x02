@@ -1,23 +1,20 @@
 #!/bin/bash
 
-POKEMON_LIST=("Bulbasaur" "Ivysaur" "Venusaur" "Charmander" "Charmeleon")
+POKEMON_LIST=("bulbasaur" "ivysaur" "venusaur" "charmander" "charmeleon")
 API_URL="https://pokeapi.co/api/v2/pokemon/"
 OUTPUT_DIR="pokemon_data"
 
 # Ensure output folder exists
-mkdir -p "OUTPUT_DIR"
+mkdir -p "$OUTPUT_DIR"
 
 for name in "${POKEMON_LIST[@]}"; do
-	# convert name to lowercase for the URL
-	name_lower=$(echo "$name"| tr '[:upper:]' '[:lower:]')
-
 	#Fetch and save JSON
-	curl -s "${API_URL}${name_lower}" -o "$OUTPUT_DIR/${name_lower}.json"
+	curl -s "${API_URL}${name}" -o "$OUTPUT_DIR/${name}.json"
 
 	if [ $? -ne 0 ]; then
-		echo "Failed to fetch data for $name_lower" >> errors.txt
+		echo "Failed to fetch data for $name" >> errors.txt
 	else
-		echo "Fetched data for $name_lower..."
+		echo "Fetched data for $name..."
 		echo "Saved data to pokemon_data/bulbasaur.json ✅"
 	fi
 
