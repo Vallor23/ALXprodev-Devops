@@ -9,7 +9,7 @@ ERROR_LOG="errors.txt"
 mkdir -p "$OUTPUT_DIR"
 >"$ERROR_LOG"  # Clear previous error log
 
-
+pid=()  # To store background process IDs
 for name in "${POKEMON_LIST[@]}"; do
         {
 		max_retries=3
@@ -36,9 +36,13 @@ for name in "${POKEMON_LIST[@]}"; do
 		# If  all attempts failed
         	if [ $success -eq 0 ]; then
                 	echo "❌ Failed to fetch $name after $max_retries attempts" >> "$EEROR_LOG"
-        	fi
+        		echo "❌ Killing all remaining jobs..."
+			kill "${pids[@]}" 2>/dev/null
+			exit 1
+		fi
 	 } & # <-- run the whole block in background
         done
+	pids+=($!)  # Save PID of  the background job
 
         # Wait for all background jobs to finish
         wait
