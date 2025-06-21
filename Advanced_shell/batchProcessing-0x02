@@ -18,7 +18,7 @@ for name in "${POKEMON_LIST[@]}"; do
 
 	while [ $attempts -lt "$max_retries" ]; do
 		#Fetch and save JSON
-		curl -s "${API_URL}${name}" -o "$OUTPUT_DIR/${name}.json"
+		curl -s --fail "${API_URL}${name}" -o "$OUTPUT_DIR/${name}.json"
 
 		if [ $? -ne 0 ]; then
 			echo "Failed to fetch data for $name" >> errors.txt
